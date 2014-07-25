@@ -1,5 +1,5 @@
 //
-//  ViewController.h
+//  JokeListViewController.h
 //  qiushibaike
 //
 //  Created by Singer on 14-7-23.
@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ViewController : UITabBarController
+@interface JokeListViewController : UIViewController<UITableViewDataSource,UITableViewDelegate>
 
 @end

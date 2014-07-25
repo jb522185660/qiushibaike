@@ -14,10 +14,16 @@
 
 @implementation ViewController
 
+-(void)viewDidAppear:(BOOL)animated{
+    self.title = @"最热";
+}
+
+
 - (void)viewDidLoad
 {
+    
     [super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
+	
 }
 
 - (void)didReceiveMemoryWarning
