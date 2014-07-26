@@ -63,12 +63,12 @@
     }
     
     //设置内容中的图片
-    NSString *imageURL = [_jockData valueForKey:@"image"];
-    if (imageURL != nil) {
+    NSString *imageName = [_jockData valueForKey:@"image"];
+    if (imageName != nil) {
         NSString *imageID = [_jockData valueForKey:@"id"];
         NSString *prefiximageId = [imageID substringToIndex:4];
-        imageURL = [NSString stringWithFormat:@"http://pic.moumentei.com/system/pictures/%@/%@/small/%@",prefiximageId,imageID,imageURL] ;
-        self.largeImageURL =[NSString stringWithFormat:@"http://pic.moumentei.com/system/pictures/%@/%@/medium/%@",prefiximageId,imageID,imageURL] ;
+        NSString *imageURL = [NSString stringWithFormat:@"http://pic.moumentei.com/system/pictures/%@/%@/small/%@",prefiximageId,imageID,imageName] ;
+        self.largeImageURL =[NSString stringWithFormat:@"http://pic.moumentei.com/system/pictures/%@/%@/medium/%@",prefiximageId,imageID,imageName] ;
         NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:imageURL]];
         AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
         [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -80,14 +80,58 @@
         }];
         
         [operation start];
+        
+        //给imageView添加收拾，点击可以放大
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showBigImage)];
+        [self.contentImageView addGestureRecognizer:tap];
+        
     }else{
         [self.contentImageView setHidden:YES];
         
     }
+
+}
+
+
+-(void) showBigImage{
     
     
+    UIScrollView *bigImageScrollView = [[UIScrollView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+//    bigImageScrollView.backgroundColor = [UIColor colorWithPatternImage:self.contentImageView.image];
+    bigImageScrollView.backgroundColor = [UIColor darkGrayColor];
+    bigImageScrollView.minimumZoomScale = 0.5;
+    bigImageScrollView.maximumZoomScale = 2;
+    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:self.largeImageURL]];
+   
+    AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
+    [self.window addSubview:bigImageScrollView];
+    
+
+    [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+        NSData *imageData = responseObject;
+        UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageWithData:imageData]];
+
+        
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(closeBigImageView:)];
+        [bigImageScrollView addGestureRecognizer:tap];
+        [bigImageScrollView addSubview:imageView];
+        [imageView setContentMode:UIViewContentModeScaleAspectFit];
+        [bigImageScrollView setContentSize:imageView.frame.size];
+        
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"图片加载失败" message:nil delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+        [alertView show];
+        [bigImageScrollView removeFromSuperview];
+    }];
+    
+    [operation start];
     
 }
+
+-(void) closeBigImageView:(UITapGestureRecognizer *) tap{
+    [tap.view removeFromSuperview];
+}
+
 
 
 #pragma mark- 根据内容计算cell的高度
