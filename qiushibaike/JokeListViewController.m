@@ -55,7 +55,7 @@
             _tableView = [[UITableView alloc]initWithFrame:frame];
             _tableView.delegate =self;
             _tableView.dataSource = self;
-            [_tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
+          // [_tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
             [self.view addSubview:_tableView];
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
@@ -79,6 +79,7 @@
 
 #pragma mark 每当有一个cell进入屏幕视野范围内就会被调用 返回当前这行显示的cell
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    
     //用static 只会初始化一次
     static NSString *ID = @"JokeCellTableViewCell";
     //拿到一个标示符先去缓存池中查找对应的cell
@@ -97,7 +98,7 @@
     NSDictionary *item = (NSDictionary *)_arrayData[indexPath.row];
     //覆盖数据
     cell.jockData = item;
-
+   // [cell cellHeightByData:item];
     [cell initCellData];
     return cell;
 }
@@ -109,7 +110,10 @@
 }
 
 -(CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return 267;
+
+    NSDictionary *dict = _arrayData[indexPath.row];
+    return [JokeCellTableViewCell cellHeightByData:dict];
+
 }
 
 /*

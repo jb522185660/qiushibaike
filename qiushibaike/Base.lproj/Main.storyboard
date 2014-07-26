@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="orz-s8-JHO">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="orz-s8-JHO">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
@@ -8,10 +8,6 @@
         <scene sceneID="rCa-mY-Ljt">
             <objects>
                 <viewController id="U6x-bi-LNp" customClass="JokeListViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="4Na-31-RVQ"/>
-                        <viewControllerLayoutGuide type="bottom" id="XQR-dv-1fe"/>
-                    </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="GJk-aa-0oN">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -63,10 +59,6 @@
         <scene sceneID="LVk-UN-OF4">
             <objects>
                 <viewController id="8gl-vw-RVh" customClass="JokeListViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="jqF-V9-Djl"/>
-                        <viewControllerLayoutGuide type="bottom" id="f62-gr-vH3"/>
-                    </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="MtZ-yq-OMa">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -82,10 +74,6 @@
         <scene sceneID="mq2-3g-3qt">
             <objects>
                 <viewController id="qqy-K3-Vqg" customClass="JokeListViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="mgE-hI-tjn"/>
-                        <viewControllerLayoutGuide type="bottom" id="9Bk-Nv-m32"/>
-                    </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="4Gw-yy-J9P">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>

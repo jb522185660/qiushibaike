@@ -21,5 +21,8 @@
 @property (nonatomic,strong) NSDictionary *jockData;
 -(void) initCellData;
 
-//-(CGFloat) cellHeightByData:(NSDictionary *) dataDict;
+@property (weak, nonatomic) IBOutlet UIView *dccView;
+
+
++(CGFloat) cellHeightByData:(NSDictionary *) dataDict;
 @end

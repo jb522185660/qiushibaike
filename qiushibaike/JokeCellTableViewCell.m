@@ -82,21 +82,81 @@
         [operation start];
     }else{
         [self.contentImageView setHidden:YES];
+        
     }
     
     
     
 }
 
+
+#pragma mark- 根据内容计算cell的高度
 //-(CGFloat) cellHeightByData:(NSDictionary *) dataDict{
 //    NSString *content  = [dataDict valueForKey:@"content"];
-//    CGFloat height = [self stringHeightWithFontSize:17 width:300 string:content];
+//    
+//   
+//    CGSize size = [content sizeWithFont:self.contentLabel.font constrainedToSize:CGSizeMake(self.contentLabel.frame.size.width, MAXFLOAT) lineBreakMode:NSLineBreakByWordWrapping];
+//    
+//    CGRect farme = self.contentLabel.frame;
+//    farme.size.height = size.height;
+//    [self.contentLabel setFrame:farme];
 //    NSString *imageURL = [dataDict valueForKey:@"image"];
-//    if (imageURL==nil || imageURL.length == 0) {
-//        return 59.0 + height + 40.0;
+//    CGFloat height = farme.origin.y + farme.size.height;
+//    if (imageURL==nil) {
+//        return height + 59;
+//    }else{
+//        CGRect frame1 = self.contentImageView.frame;
+//        [self.contentImageView setFrame:CGRectMake(frame1.origin.x, height + 10, frame1.size.width, frame1.size.height)];
+//        height=self.contentImageView.frame.origin.y+self.contentImageView.frame.size.height;
+//        return height+59;
 //    }
-//    return 59.0 + height + 5.0 + 112.0 + 40.0;
+//
 //}
 
+
+
+-(void)layoutSubviews{
+    [super layoutSubviews];
+    
+    NSString *content  = [_jockData valueForKey:@"content"];
+    
+    UIFont *font = [UIFont systemFontOfSize:17];
+    CGSize size = [content sizeWithFont:font constrainedToSize:CGSizeMake(296, MAXFLOAT) lineBreakMode:NSLineBreakByWordWrapping];
+    
+    CGRect contentLabelFrame = self.contentLabel.frame;
+    contentLabelFrame.size.height = size.height;
+    [self.contentLabel setFrame:contentLabelFrame];
+    CGFloat height = contentLabelFrame.origin.y + contentLabelFrame.size.height;
+    
+    NSString *imageURL = [_jockData valueForKey:@"image"];
+    
+    if (imageURL == nil || imageURL== [NSNull null]) {
+        self.contentImageView.hidden = YES;
+        CGRect dccViewFrame = self.dccView.frame;
+        dccViewFrame.origin.y = height + 10 ;
+        [self.dccView setFrame:dccViewFrame];
+        
+    }else{
+        
+        CGRect contentImageFrame = self.contentImageView.frame;
+        contentImageFrame.origin.y = height + 5;
+        [self.contentImageView setFrame:contentImageFrame];
+        
+        height = contentImageFrame.origin.y + contentImageFrame.size.height;
+    }
+    
+}
+
++(CGFloat) cellHeightByData:(NSDictionary *) dataDict{
+    NSString *content  = [dataDict valueForKey:@"content"];
+    NSString *imageURL = [dataDict valueForKey:@"image"];
+    UIFont *font = [UIFont systemFontOfSize:17];
+    CGSize size = [content sizeWithFont:font constrainedToSize:CGSizeMake(296, MAXFLOAT) lineBreakMode:NSLineBreakByWordWrapping];
+    if (imageURL==nil || imageURL == [NSNull null] ) {
+        return 56 + size.height + 59 + 10;
+    }
+   
+    return 56 + size.height + 5 + 59 + 96 + 10;
+}
 
 @end
