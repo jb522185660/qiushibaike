@@ -197,7 +197,7 @@
     
     NSString *imageURL = [_jockData valueForKey:@"image"];
     
-    if (imageURL == nil || imageURL== [NSNull null]) {
+    if (imageURL == nil || (NSNull *)imageURL== [NSNull null]) {
         self.contentImageView.hidden = YES;
         CGRect dccViewFrame = self.dccView.frame;
         dccViewFrame.origin.y = height + 10 ;
@@ -219,7 +219,7 @@
     NSString *imageURL = [dataDict valueForKey:@"image"];
     UIFont *font = [UIFont systemFontOfSize:17];
     CGSize size = [content sizeWithFont:font constrainedToSize:CGSizeMake(296, MAXFLOAT) lineBreakMode:NSLineBreakByWordWrapping];
-    if (imageURL==nil || imageURL == [NSNull null] ) {
+    if (imageURL==nil || (NSNull *)imageURL == [NSNull null] ) {
         return 56 + size.height + 59 + 10;
     }
    
