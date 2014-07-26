@@ -99,7 +99,7 @@
     //覆盖数据
     cell.jockData = item;
    // [cell cellHeightByData:item];
-    [cell initCellData];
+    //[cell initCellData];
     return cell;
 }
 

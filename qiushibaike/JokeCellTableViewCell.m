@@ -117,7 +117,7 @@
 
 -(void)layoutSubviews{
     [super layoutSubviews];
-    
+    [self initCellData];
     NSString *content  = [_jockData valueForKey:@"content"];
     
     UIFont *font = [UIFont systemFontOfSize:17];
