@@ -47,19 +47,28 @@
         NSString *userID = [userDict valueForKey:@"id"];
         NSString *prefixUserID = [userID substringToIndex:4];
         NSString *icon = [userDict valueForKey:@"icon"];
-        NSString *touxiangImageURL = [NSString stringWithFormat:@"http://pic.qiushibaike.com/system/avtnew/%@/%@/medium/%@",prefixUserID,userID,icon];
-        
-        NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:touxiangImageURL]];
-        AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
-        [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
-            NSData *imageData = responseObject;
-            [self.touxiangImageView setImage:[UIImage imageWithData:imageData]];
+    
+        if ((NSNull *)icon != [NSNull null]) {
+            NSString *touxiangImageURL = [NSString stringWithFormat:@"http://pic.qiushibaike.com/system/avtnew/%@/%@/medium/%@",prefixUserID,userID,icon];
             
-        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:touxiangImageURL]];
+            AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
+            [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+                NSData *imageData = responseObject;
+                [self.touxiangImageView setImage:[UIImage imageWithData:imageData]];
+                
+            } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+                
+            }];
             
-        }];
+            [operation start];
+        }else{
+            [self.touxiangImageView setImage:[UIImage imageNamed:@"avatar.jpg"]];
+        }
         
-        [operation start];
+    }else{
+        [self.touxiangImageView setImage:[UIImage imageNamed:@"avatar.jpg"]];
+        [self.nickNameLabel setText:@"匿名"];
     }
     
     //设置内容中的图片
@@ -108,14 +117,23 @@
     NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:self.largeImageURL]];
    
     AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
+    UIActivityIndicatorView *activityView = [[UIActivityIndicatorView alloc] init];
+    CGRect rect = [[UIScreen mainScreen]bounds];
+    
+    activityView.center = CGPointMake(rect.size.width*0.5, rect.size.height*0.5);
+    
+    CGFloat scrollWidth = bigImageScrollView.frame.size.width;
+    CGFloat scrollHeight = bigImageScrollView.frame.size.height;
     [self.window addSubview:bigImageScrollView];
     
-
+    [self.window addSubview:activityView];
+    [activityView startAnimating];
     [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+        [activityView stopAnimating];
         NSData *imageData = responseObject;
         UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageWithData:imageData]];
 
-        
+        [imageView setFrame:CGRectMake(0, 0, scrollWidth, scrollHeight)];
         UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(closeBigImageView:)];
         [bigImageScrollView addGestureRecognizer:tap];
         [bigImageScrollView addSubview:imageView];
@@ -130,9 +148,8 @@
     }];
     
     [operation start];
-    
 }
-
+;
 -(void) closeBigImageView:(UITapGestureRecognizer *) tap{
     [tap.view removeFromSuperview];
 }
@@ -165,8 +182,9 @@
 
 
 -(void)layoutSubviews{
+    
     [super layoutSubviews];
-    [self initCellData];
+    
     NSString *content  = [_jockData valueForKey:@"content"];
     
     UIFont *font = [UIFont systemFontOfSize:17];
@@ -207,5 +225,7 @@
    
     return 56 + size.height + 5 + 59 + 96 + 10;
 }
+
+
 
 @end

@@ -7,29 +7,27 @@
 //
 
 #import "ViewController.h"
-
+#import "JokeListViewController.h"
 @interface ViewController ()
 
 @end
 
 @implementation ViewController
 
--(void)viewDidAppear:(BOOL)animated{
-    self.title = @"最热";
-}
 
 
 - (void)viewDidLoad
 {
     
+    JokeListViewController *jockVC = self.viewControllers[0];
+    self.title = jockVC.tabBarItem.title;
     [super viewDidLoad];
+  
 	
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+-(void)tabBar:(UITabBar *)tabBar didSelectItem:(UITabBarItem *)item{
+    self.title = item.title;
 }
 
 @end

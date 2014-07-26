@@ -23,7 +23,7 @@
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <imageView contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="114" placeholderIntrinsicHeight="88" id="c8k-mk-rgy">
+                    <imageView contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="114" placeholderIntrinsicHeight="88" image="loading.gif" id="c8k-mk-rgy">
                         <rect key="frame" x="12" y="128" width="94" height="96"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES"/>
                     </imageView>
@@ -96,5 +96,6 @@
     </objects>
     <resources>
         <image name="avatar.jpg" width="221" height="220"/>
+        <image name="loading.gif" width="128" height="128"/>
     </resources>
 </document>

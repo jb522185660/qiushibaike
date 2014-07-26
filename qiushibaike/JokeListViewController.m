@@ -36,7 +36,10 @@
 
 - (void)viewDidLoad
 {
+    [super viewDidLoad];
     
+    [self.navigationController setTitle:@"uuu"];
+//    self.navigationItem.title = self.tabBarItem.title;
     NSURL *url = [NSURL URLWithString:@"http://m2.qiushibaike.com/article/list/suggest?count=30&page=1"];
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
@@ -64,7 +67,7 @@
     
     [operation start];
     
-    [super viewDidLoad];
+    
     NSLog(@"title:%@",self.tabBarItem.title);
     
 }
@@ -98,8 +101,9 @@
     NSDictionary *item = (NSDictionary *)_arrayData[indexPath.row];
     //覆盖数据
     cell.jockData = item;
-   // [cell cellHeightByData:item];
-    //[cell initCellData];
+
+    [cell initCellData];
+
     return cell;
 }
 

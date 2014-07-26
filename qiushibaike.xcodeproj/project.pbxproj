@@ -27,6 +27,7 @@
 		460B7520198021B200EEEBD5 /* UIWebView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 460B750F198021B200EEEBD5 /* UIWebView+AFNetworking.m */; };
 		467CC4751981C43C00BAC5F7 /* JokeCellTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 467CC4731981C43C00BAC5F7 /* JokeCellTableViewCell.m */; };
 		467CC4761981C43C00BAC5F7 /* JokeCellTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 467CC4741981C43C00BAC5F7 /* JokeCellTableViewCell.xib */; };
+		46A1800A1983ED28000DA3F7 /* loading.gif in Resources */ = {isa = PBXBuildFile; fileRef = 46A180091983ED28000DA3F7 /* loading.gif */; };
 		46A6E1141982BFC100175F21 /* avatar.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 46A6E1131982BFC100175F21 /* avatar.jpg */; };
 		46FA957B198006A2000A908D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46FA957A198006A2000A908D /* Foundation.framework */; };
 		46FA957D198006A2000A908D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46FA957C198006A2000A908D /* CoreGraphics.framework */; };
@@ -96,6 +97,7 @@
 		467CC4721981C43C00BAC5F7 /* JokeCellTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JokeCellTableViewCell.h; sourceTree = "<group>"; };
 		467CC4731981C43C00BAC5F7 /* JokeCellTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JokeCellTableViewCell.m; sourceTree = "<group>"; };
 		467CC4741981C43C00BAC5F7 /* JokeCellTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JokeCellTableViewCell.xib; sourceTree = "<group>"; };
+		46A180091983ED28000DA3F7 /* loading.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = loading.gif; sourceTree = "<group>"; };
 		46A6E1131982BFC100175F21 /* avatar.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = avatar.jpg; sourceTree = "<group>"; };
 		46FA9577198006A2000A908D /* qiushibaike.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = qiushibaike.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		46FA957A198006A2000A908D /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -246,6 +248,7 @@
 		46FA9581198006A2000A908D /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				46A180091983ED28000DA3F7 /* loading.gif */,
 				46A6E1131982BFC100175F21 /* avatar.jpg */,
 				46FA9582198006A2000A908D /* qiushibaike-Info.plist */,
 				46FA9583198006A2000A908D /* InfoPlist.strings */,
@@ -352,6 +355,7 @@
 				46FA9593198006A2000A908D /* Images.xcassets in Resources */,
 				46A6E1141982BFC100175F21 /* avatar.jpg in Resources */,
 				46FA9585198006A2000A908D /* InfoPlist.strings in Resources */,
+				46A1800A1983ED28000DA3F7 /* loading.gif in Resources */,
 				467CC4761981C43C00BAC5F7 /* JokeCellTableViewCell.xib in Resources */,
 				46FA958E198006A2000A908D /* Main.storyboard in Resources */,
 			);
