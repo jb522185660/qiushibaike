@@ -92,6 +92,10 @@
 
 }
 
+//放大图片后支持手指缩放
+- (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView{
+    return scrollView.subviews[0];
+}
 
 -(void) showBigImage{
     
@@ -117,6 +121,7 @@
         [bigImageScrollView addSubview:imageView];
         [imageView setContentMode:UIViewContentModeScaleAspectFit];
         [bigImageScrollView setContentSize:imageView.frame.size];
+        bigImageScrollView.delegate = self;
         
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"图片加载失败" message:nil delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];

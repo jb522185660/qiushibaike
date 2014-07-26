@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface JokeCellTableViewCell : UITableViewCell
+@interface JokeCellTableViewCell : UITableViewCell <UIScrollViewDelegate>
 @property (weak, nonatomic) IBOutlet UIImageView *touxiangImageView;
 
 @property (weak, nonatomic) IBOutlet UILabel *nickNameLabel;
