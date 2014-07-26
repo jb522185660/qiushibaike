@@ -33,6 +33,8 @@
     
     
     self.contentLabel.text  = [self.jockData valueForKey:@"content"];
+//    [self.commentsLabel setNumberOfLines:0];
+//    [self.contentLabel setLineBreakMode:NSLineBreakByClipping];
     NSDictionary *votes = [self.jockData valueForKey:@"votes"];
     self.dingLabel.text = [NSString stringWithFormat:@"顶(%@)",[votes valueForKey:@"up"]];
     self.caiLabel.text = [NSString stringWithFormat:@"踩(%@)",[votes valueForKey:@"down"]];
