@@ -55,7 +55,7 @@
             _tableView = [[UITableView alloc]initWithFrame:frame];
             _tableView.delegate =self;
             _tableView.dataSource = self;
-          // [_tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
+            [_tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
             [self.view addSubview:_tableView];
         }
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
