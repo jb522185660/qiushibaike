@@ -25,4 +25,5 @@
 
 
 +(CGFloat) cellHeightByData:(NSDictionary *) dataDict;
+
 @end

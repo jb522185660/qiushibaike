@@ -11,6 +11,7 @@
 #import "AFURLConnectionOperation.h"
 #import "JokeCellTableViewCell.h"
 #import "MJRefresh.h"
+#import "JokeCommentsViewController.h"
 NSString *const JokeCellTableViewCellIdentifier = @"JokeCellTableViewCell";
 
 @interface JokeListViewController ()
@@ -184,7 +185,7 @@ NSString *const JokeCellTableViewCellIdentifier = @"JokeCellTableViewCell";
     //覆盖数据
     cell.jockData = item;
     
-    [cell initCellData];
+//    [cell initCellData];
     
     return cell;
 }
@@ -192,7 +193,11 @@ NSString *const JokeCellTableViewCellIdentifier = @"JokeCellTableViewCell";
 
 #pragma mark 选中cell
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    
+    JokeCommentsViewController *commentsController = [[JokeCommentsViewController alloc] init];
+    NSDictionary *jokeDict  = _arrayData[indexPath.row];
+    commentsController.jokeDict = jokeDict;
+    [commentsController.view setBackgroundColor:[UIColor whiteColor]];
+    [self.navigationController pushViewController:commentsController animated:YES];
 }
 
 -(CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{

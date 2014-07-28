@@ -7,15 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-//@protocol ViewControllerUpdateNavigationTitle ;
 @interface ViewController : UITabBarController
 
-//@property (nonatomic,weak) id<ViewControllerUpdateNavigationTitle> updateNavigationTitleDegelate;
+
 @end
-
-/*
-@protocol ViewControllerUpdateNavigationTitle <NSObject>
-
--(void)updateNavigation:(NSString *) title;
-
-@end*/

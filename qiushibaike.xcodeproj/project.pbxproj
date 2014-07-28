@@ -46,6 +46,9 @@
 		46A1800A1983ED28000DA3F7 /* loading.gif in Resources */ = {isa = PBXBuildFile; fileRef = 46A180091983ED28000DA3F7 /* loading.gif */; };
 		46A1B70A19866E3600AF4ADD /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A1B70919866E3600AF4ADD /* MapKit.framework */; };
 		46A1B70C19866E4200AF4ADD /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46A1B70B19866E4200AF4ADD /* ImageIO.framework */; };
+		46A1B712198696BD00AF4ADD /* JokeCommentsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 46A1B711198696BD00AF4ADD /* JokeCommentsViewController.m */; };
+		46A1B71619869EC300AF4ADD /* JokeCommentTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 46A1B71419869EC300AF4ADD /* JokeCommentTableViewCell.m */; };
+		46A1B71719869EC300AF4ADD /* JokeCommentTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 46A1B71519869EC300AF4ADD /* JokeCommentTableViewCell.xib */; };
 		46A6E1141982BFC100175F21 /* avatar.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 46A6E1131982BFC100175F21 /* avatar.jpg */; };
 		46EE7E3619853C8300A0DA45 /* MJRefresh.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 46EE7E2619853C8300A0DA45 /* MJRefresh.bundle */; };
 		46EE7E3719853C8300A0DA45 /* MJRefreshBaseView.m in Sources */ = {isa = PBXBuildFile; fileRef = 46EE7E2919853C8300A0DA45 /* MJRefreshBaseView.m */; };
@@ -159,6 +162,11 @@
 		46A180091983ED28000DA3F7 /* loading.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = loading.gif; sourceTree = "<group>"; };
 		46A1B70919866E3600AF4ADD /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		46A1B70B19866E4200AF4ADD /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
+		46A1B710198696BD00AF4ADD /* JokeCommentsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JokeCommentsViewController.h; sourceTree = "<group>"; };
+		46A1B711198696BD00AF4ADD /* JokeCommentsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JokeCommentsViewController.m; sourceTree = "<group>"; };
+		46A1B71319869EC300AF4ADD /* JokeCommentTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JokeCommentTableViewCell.h; sourceTree = "<group>"; };
+		46A1B71419869EC300AF4ADD /* JokeCommentTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JokeCommentTableViewCell.m; sourceTree = "<group>"; };
+		46A1B71519869EC300AF4ADD /* JokeCommentTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JokeCommentTableViewCell.xib; sourceTree = "<group>"; };
 		46A6E1131982BFC100175F21 /* avatar.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = avatar.jpg; sourceTree = "<group>"; };
 		46EE7E2619853C8300A0DA45 /* MJRefresh.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = MJRefresh.bundle; sourceTree = "<group>"; };
 		46EE7E2719853C8300A0DA45 /* MJRefresh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MJRefresh.h; sourceTree = "<group>"; };
@@ -387,6 +395,11 @@
 				467CC4721981C43C00BAC5F7 /* JokeCellTableViewCell.h */,
 				467CC4731981C43C00BAC5F7 /* JokeCellTableViewCell.m */,
 				467CC4741981C43C00BAC5F7 /* JokeCellTableViewCell.xib */,
+				46A1B710198696BD00AF4ADD /* JokeCommentsViewController.h */,
+				46A1B711198696BD00AF4ADD /* JokeCommentsViewController.m */,
+				46A1B71319869EC300AF4ADD /* JokeCommentTableViewCell.h */,
+				46A1B71419869EC300AF4ADD /* JokeCommentTableViewCell.m */,
+				46A1B71519869EC300AF4ADD /* JokeCommentTableViewCell.xib */,
 			);
 			path = qiushibaike;
 			sourceTree = "<group>";
@@ -502,6 +515,7 @@
 				46A6E1141982BFC100175F21 /* avatar.jpg in Resources */,
 				46EE7E3619853C8300A0DA45 /* MJRefresh.bundle in Resources */,
 				46FA9585198006A2000A908D /* InfoPlist.strings in Resources */,
+				46A1B71719869EC300AF4ADD /* JokeCommentTableViewCell.xib in Resources */,
 				46A1800A1983ED28000DA3F7 /* loading.gif in Resources */,
 				467CC4761981C43C00BAC5F7 /* JokeCellTableViewCell.xib in Resources */,
 				46FA958E198006A2000A908D /* Main.storyboard in Resources */,
@@ -526,6 +540,7 @@
 				460B751E198021B200EEEBD5 /* UIProgressView+AFNetworking.m in Sources */,
 				460B751C198021B200EEEBD5 /* UIButton+AFNetworking.m in Sources */,
 				461E081D1986689A0006F47B /* SDWebImageManager.m in Sources */,
+				46A1B71619869EC300AF4ADD /* JokeCommentTableViewCell.m in Sources */,
 				461E081E1986689A0006F47B /* SDWebImagePrefetcher.m in Sources */,
 				467CC4751981C43C00BAC5F7 /* JokeCellTableViewCell.m in Sources */,
 				460B751F198021B200EEEBD5 /* UIRefreshControl+AFNetworking.m in Sources */,
@@ -542,6 +557,7 @@
 				460B7515198021B200EEEBD5 /* AFURLConnectionOperation.m in Sources */,
 				460B751D198021B200EEEBD5 /* UIImageView+AFNetworking.m in Sources */,
 				46EE7E3B19853C8300A0DA45 /* UIScrollView+Extension.m in Sources */,
+				46A1B712198696BD00AF4ADD /* JokeCommentsViewController.m in Sources */,
 				461E08201986689A0006F47B /* UIImage+GIF.m in Sources */,
 				460B7510198021B200EEEBD5 /* AFHTTPRequestOperation.m in Sources */,
 				460B751A198021B200EEEBD5 /* UIActivityIndicatorView+AFNetworking.m in Sources */,
