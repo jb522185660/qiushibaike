@@ -12,33 +12,45 @@
 
 - (void)awakeFromNib
 {
-   
+   NSLog(@"22222");
     [super awakeFromNib];
     
     //设置选中的时候没有颜色
     self.selectionStyle = UITableViewCellSelectionStyleNone;
     
+    
+}
+
+-(void)layoutSubviews{
+    NSLog(@"33333");
+    NSLog(@"评论：%@",self.commentDict);
+
     UIImage *touxiangDefaultImage = [UIImage imageNamed:@"avatar.jpg"];
     NSDictionary *userDict = _commentDict[@"user"];
-    if ((NSNull *)userDict != [NSNull null]){
+    if ((NSNull *)userDict != [NSNull null] && userDict != nil){
         [self.nickNameLabel setText:userDict[@"login"]];
         NSString *userID = [userDict valueForKey:@"id"];
         NSString *prefixUserID = [userID substringToIndex:4];
         NSString *icon = [userDict valueForKey:@"icon"];
-        if ((NSNull *)icon != [NSNull null]) {
+        if ((NSNull *)icon != [NSNull null] && icon != nil) {
             NSString *touxiangImageURL = [NSString stringWithFormat:@"http://pic.qiushibaike.com/system/avtnew/%@/%@/medium/%@",prefixUserID,userID,icon];
             NSURL *touxiangURL = [NSURL URLWithString:touxiangImageURL];
             [self.touxiangImageView sd_setImageWithURL:touxiangURL placeholderImage:touxiangDefaultImage];
         }
     }else{
-    
+        
         [self.nickNameLabel setText:@"匿名"];
         [self.touxiangImageView setImage:touxiangDefaultImage];
     }
     
     [self.commentLabel setText:_commentDict[@"content"]];
-    [self.commentFloorLabel setText:_commentDict[@"floor"]];
+    
+    self.commentFloorLabel.hidden = YES;
+//    NSInteger floor =(NSInteger) [_commentDict valueForKey:@"floor"];
+//    
+//    [self.commentFloorLabel setText:[NSString stringWithFormat:@"%d",floor]];
 }
+
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
 {

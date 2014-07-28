@@ -16,31 +16,52 @@
     NSInteger _page;
     UITableView *_commentsTableView;
     NSMutableArray *_commentsArray;
+    BOOL _isFirst;
 }
 @end
 
 @implementation JokeCommentsViewController
+
 -(void) loadCommentsData{
+    if (_commentsArray ==  nil) {
+        _commentsArray = [[NSMutableArray alloc] init];
+        [_commentsArray addObject:self.jokeDict];
+    }
+    
     NSString *urlStr = [NSString stringWithFormat:@"http://m2.qiushibaike.com/article/%@/comments?count=20&page=%d",_jokeDict[@"id"],_page];
     
     NSURL *url = [NSURL URLWithString:urlStr];
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     
-    AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
-    [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
-        //请求成功
-        NSString *requestTmp = [NSString stringWithString:operation.responseString];
-        NSData *resData = [[NSData alloc] initWithData:[requestTmp dataUsingEncoding:NSUTF8StringEncoding]];
-        //系统自带JSON解析
-        NSDictionary *dictData = [NSJSONSerialization JSONObjectWithData:resData options:NSJSONReadingMutableLeaves error:nil];
-        
-        _commentsArray = [NSMutableArray arrayWithArray:dictData[@"items"]];
-        _page++;
-        
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        
-    }];
-    [operation start];
+    NSData *responseData = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:nil];
+   
+//    responseData = [responseData dataUsingEncoding:NSUTF8StringEncoding];
+    NSDictionary *dictData = [NSJSONSerialization JSONObjectWithData:responseData options:NSJSONReadingMutableLeaves error:nil];
+    
+    
+    [_commentsArray addObjectsFromArray:dictData[@"items"]];
+    _page++;
+    
+    
+//    AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
+//    [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+//        //请求成功
+//        NSString *requestTmp = [NSString stringWithString:operation.responseString];
+//        NSData *resData = [[NSData alloc] initWithData:[requestTmp dataUsingEncoding:NSUTF8StringEncoding]];
+//        //系统自带JSON解析
+//        NSDictionary *dictData = [NSJSONSerialization JSONObjectWithData:resData options:NSJSONReadingMutableLeaves error:nil];
+//        
+//        [_commentsArray addObjectsFromArray:dictData[@"items"]];
+//        _page++;
+//        
+//    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+//        NSLog(@"加载评论出错%@",error);
+//    }];
+//    [operation start];
+    
+    
+    
+
 
 }
 
@@ -63,9 +84,10 @@
         _commentsTableView.tableHeaderView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, _commentsTableView.bounds.size.width, 0.01f)];
 //        [_commentsTableView.tableHeaderView setBackgroundColor:[UIColor redColor]];
 
-        [self loadCommentsData];
+        
     }
-    
+    [self loadCommentsData];
+    _isFirst = NO;
     [super viewDidLoad];
 }
 
@@ -74,14 +96,22 @@
 
 
 -(NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    
+    NSLog(@"行数：%d",_commentsArray.count);
+//    if (_isFirst) {
+//        return _commentsArray.count+1;
+//    }else{
+//        return _commentsArray.count+3;
+//    }
     return _commentsArray.count;
+   
 }
 
 -(CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.row == 0) {
         return  [JokeCellTableViewCell cellHeightByData:self.jokeDict];
     }
-    return 30;
+    return 142.0f;
 }
 
 //-(CGFloat) tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section{
@@ -111,18 +141,27 @@
             NSArray *array = [bundle loadNibNamed:@"JokeCellTableViewCell" owner:self options:nil];
             JokeCellTableViewCell *headCell = [array lastObject];
             headCell.jockData = self.jokeDict;
-            [headCell setBackgroundColor:[UIColor redColor]];
+//            [headCell setBackgroundColor:[UIColor redColor]];
             return  headCell;
         }else{
-//            NSBundle *bundle = [NSBundle mainBundle];
-//            NSArray *array = [bundle loadNibNamed:@"JokeCommentTableViewCell" owner:self options:nil];
-//            JokeCommentTableViewCell *commentCell = [array lastObject];
-//            commentCell.commentDict = _commentsArray[indexPath.row];
-//            cell = commentCell;
+            
+            NSBundle *bundle = [NSBundle mainBundle];
+            NSArray *array = [bundle loadNibNamed:@"JokeCommentTableViewCell" owner:self options:nil];
+          
+            JokeCommentTableViewCell *commentCell = [array lastObject];
+            commentCell.commentDict = _commentsArray[indexPath.row];
+//            [commentCell.nickNameLabel setText:@"bbbbb"];
+//            [commentCell setBackgroundColor:[UIColor blueColor]];
+            cell = commentCell;
+            
+            
             return cell;
         }
         
     }
+    
+    //设置数据
+   // [cell.textLabel setText:@"123124"];
     return cell;
 }
 
