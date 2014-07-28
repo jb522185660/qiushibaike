@@ -10,6 +10,9 @@
 #import "AFHTTPRequestOperation.h"
 #import "AFURLConnectionOperation.h"
 #import "JokeCellTableViewCell.h"
+#import "MJRefresh.h"
+NSString *const JokeCellTableViewCellIdentifier = @"JokeCellTableViewCell";
+
 @interface JokeListViewController ()
 {
     //    NSMutableDictionary *_dictData;
@@ -34,16 +37,28 @@
     
 }
 
-- (void)viewDidLoad
+/**
+ *  集成刷新控件
+ */
+- (void)setupRefresh
 {
-    _page = 1;
-    [super viewDidLoad];
+    // 1.下拉刷新(进入刷新状态就会调用self的headerRereshing)
+    [_tableView addHeaderWithTarget:self action:@selector(headerRereshing)];
+#warning 自动刷新(一进入程序就下拉刷新)
+    [_tableView headerBeginRefreshing];
     
-    //[self.navigationController setTitle:@"uuu"];
-    //    self.navigationItem.title = self.tabBarItem.title;
+    // 2.上拉加载更多(进入刷新状态就会调用self的footerRereshing)
+    [_tableView addFooterWithTarget:self action:@selector(footerRereshing)];
+}
+
+
+-(void) loadData:(BOOL) isFirst{
+    if (isFirst) {
+        _page = 1;
+    }
     NSURL *url = [NSURL URLWithString:[self findJsonURL:self.tabBarItem.title]];
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
-   
+    
     AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
     
     [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -52,24 +67,79 @@
         NSData *resData = [[NSData alloc] initWithData:[requestTmp dataUsingEncoding:NSUTF8StringEncoding]];
         //系统自带JSON解析
         NSDictionary *dictData = [NSJSONSerialization JSONObjectWithData:resData options:NSJSONReadingMutableLeaves error:nil];
-        _arrayData = [NSMutableArray arrayWithArray:[dictData valueForKeyPath:@"items"]];
-        //NSLog(@"%@",_dictData);
-        if (_tableView == nil) {
-            CGFloat width = self.view.frame.size.width;
-            CGFloat height = self.view.frame.size.height;
-            CGRect frame = CGRectMake(0,64,width,height-49-64);
-            _tableView = [[UITableView alloc]initWithFrame:frame];
-            _tableView.delegate =self;
-            _tableView.dataSource = self;
-            [_tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
-            [self.view addSubview:_tableView];
+        
+        if (isFirst) {
+            _arrayData = [NSMutableArray arrayWithArray:[dictData valueForKeyPath:@"items"]];
+        }else{
+            [_arrayData addObjectsFromArray:[dictData valueForKeyPath:@"items"]];
         }
+        
         _page++;
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         //请求失败
     }];
     
     [operation start];
+}
+
+
+#pragma mark 开始进入刷新状态
+- (void)headerRereshing
+{
+    // 1.添加数据
+    [self loadData:YES];
+    
+    // 2.2秒后刷新表格UI
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        // 刷新表格
+        [_tableView reloadData];
+        
+        // (最好在刷新表格后调用)调用endRefreshing可以结束刷新状态
+        [_tableView headerEndRefreshing];
+        
+    });
+}
+
+- (void)footerRereshing
+{
+    // 1.添加数据
+   
+    [self loadData:NO];
+    
+    
+    // 2.2秒后刷新表格UI
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        // 刷新表格
+        [_tableView reloadData];
+        
+        // (最好在刷新表格后调用)调用endRefreshing可以结束刷新状态
+        [_tableView footerEndRefreshing];
+    });
+}
+
+
+- (void)viewDidLoad
+{
+    _page = 1;
+    [super viewDidLoad];
+    
+    if (_tableView == nil) {
+        CGFloat width = self.view.frame.size.width;
+        CGFloat height = self.view.frame.size.height;
+        CGRect frame = CGRectMake(0,64,width,height-49-64);
+        _tableView = [[UITableView alloc]initWithFrame:frame];
+        _tableView.delegate =self;
+        _tableView.dataSource = self;
+        [_tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
+        [self.view addSubview:_tableView];
+    }
+    
+    // 1.注册cell
+//    [_tableView registerClass:[JokeCellTableViewCell class] forCellReuseIdentifier:JokeCellTableViewCellIdentifier];
+    
+    // 2.集成刷新控件
+    [self setupRefresh];
+    
     
     
     NSLog(@"title:%@",self.tabBarItem.title);
@@ -88,9 +158,9 @@
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
     //用static 只会初始化一次
-    static NSString *ID = @"JokeCellTableViewCell";
+//    static NSString *ID = @"JokeCellTableViewCell";
     //拿到一个标示符先去缓存池中查找对应的cell
-    JokeCellTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:ID];
+    JokeCellTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:JokeCellTableViewCellIdentifier];
     
     //如果缓存池中没有，才需要传入一个标识创建新的cell
     if (cell == nil) {
