@@ -70,8 +70,14 @@ NSString *const JokeCellTableViewCellIdentifier = @"JokeCellTableViewCell";
         
         if (isFirst) {
             _arrayData = [NSMutableArray arrayWithArray:[dictData valueForKeyPath:@"items"]];
+            [_tableView headerEndRefreshing];
         }else{
             [_arrayData addObjectsFromArray:[dictData valueForKeyPath:@"items"]];
+            
+        }
+        [_tableView reloadData];
+        if (!isFirst) {
+            [_tableView footerEndRefreshing];
         }
         
         _page++;
@@ -89,15 +95,17 @@ NSString *const JokeCellTableViewCellIdentifier = @"JokeCellTableViewCell";
     // 1.添加数据
     [self loadData:YES];
     
+   
+    
     // 2.2秒后刷新表格UI
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        // 刷新表格
-        [_tableView reloadData];
-        
-        // (最好在刷新表格后调用)调用endRefreshing可以结束刷新状态
-        [_tableView headerEndRefreshing];
-        
-    });
+//    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//        // 刷新表格
+//        [_tableView reloadData];
+//        
+//        // (最好在刷新表格后调用)调用endRefreshing可以结束刷新状态
+//        [_tableView headerEndRefreshing];
+//        
+//    });
 }
 
 - (void)footerRereshing
@@ -107,14 +115,14 @@ NSString *const JokeCellTableViewCellIdentifier = @"JokeCellTableViewCell";
     [self loadData:NO];
     
     
-    // 2.2秒后刷新表格UI
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        // 刷新表格
-        [_tableView reloadData];
-        
-        // (最好在刷新表格后调用)调用endRefreshing可以结束刷新状态
-        [_tableView footerEndRefreshing];
-    });
+//    // 2.2秒后刷新表格UI
+//    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//        // 刷新表格
+//        [_tableView reloadData];
+//        
+//        // (最好在刷新表格后调用)调用endRefreshing可以结束刷新状态
+//        [_tableView footerEndRefreshing];
+//    });
 }
 
 
