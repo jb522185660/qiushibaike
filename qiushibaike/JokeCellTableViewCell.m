@@ -8,6 +8,8 @@
 
 #import "JokeCellTableViewCell.h"
 #import "AFHTTPRequestOperation.h"
+#import "UIImageView+WebCache.h"
+#import "UIImage+GIF.h"
 @implementation JokeCellTableViewCell
 
 - (void)awakeFromNib
@@ -40,6 +42,10 @@
     self.caiLabel.text = [NSString stringWithFormat:@"踩(%@)",[votes valueForKey:@"down"]];
     self.commentsLabel.text = [NSString stringWithFormat:@"评论(%@)",[self.jockData valueForKey:@"comments_count"]];
     
+    
+//    UIImage *loadingImage = [UIImage sd_animatedGIFNamed:@"loading.gif"];
+    UIImage *touxiangDefaultImage = [UIImage imageNamed:@"avatar.jpg"];
+    
     //设置头像
     NSDictionary *userDict = [self.jockData valueForKey:@"user"];
     if ((NSNull *)userDict != [NSNull null]) {
@@ -51,17 +57,22 @@
         if ((NSNull *)icon != [NSNull null]) {
             NSString *touxiangImageURL = [NSString stringWithFormat:@"http://pic.qiushibaike.com/system/avtnew/%@/%@/medium/%@",prefixUserID,userID,icon];
             
-            NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:touxiangImageURL]];
-            AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
-            [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
-                NSData *imageData = responseObject;
-                [self.touxiangImageView setImage:[UIImage imageWithData:imageData]];
-                
-            } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-                
-            }];
+//            NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:touxiangImageURL]];
+//            AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
+//            [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+//                NSData *imageData = responseObject;
+//                [self.touxiangImageView setImage:[UIImage imageWithData:imageData]];
+//                
+//            } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+            //
+            //            }];
+            //
+            //            [operation start];
             
-            [operation start];
+            [self.touxiangImageView
+             sd_setImageWithURL:[NSURL URLWithString:touxiangImageURL]
+             placeholderImage:touxiangDefaultImage];
+
         }else{
             [self.touxiangImageView setImage:[UIImage imageNamed:@"avatar.jpg"]];
         }
@@ -73,22 +84,26 @@
     
     //设置内容中的图片
     NSString *imageName = [_jockData valueForKey:@"image"];
-    if (imageName != nil) {
+    if (imageName != nil && (NSNull *)imageName != [NSNull null]) {
         NSString *imageID = [_jockData valueForKey:@"id"];
         NSString *prefiximageId = [imageID substringToIndex:4];
-        NSString *imageURL = [NSString stringWithFormat:@"http://pic.moumentei.com/system/pictures/%@/%@/small/%@",prefiximageId,imageID,imageName] ;
-        self.largeImageURL =[NSString stringWithFormat:@"http://pic.moumentei.com/system/pictures/%@/%@/medium/%@",prefiximageId,imageID,imageName] ;
-        NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:imageURL]];
-        AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
-        [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
-            NSData *imageData = responseObject;
-            [self.contentImageView setImage:[UIImage imageWithData:imageData]];
-          
-        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            
-        }];
+        NSString *imageURL = [NSString stringWithFormat:@"http://pic.qiushibaike.com/system/pictures/%@/%@/small/%@",prefiximageId,imageID,imageName] ;
+        self.largeImageURL =[NSString stringWithFormat:@"http://pic.qiushibaike.com/system/pictures/%@/%@/medium/%@",prefiximageId,imageID,imageName] ;
         
-        [operation start];
+//        NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:imageURL]];
+//        AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
+//        [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+//            NSData *imageData = responseObject;
+//            [self.contentImageView setImage:[UIImage imageWithData:imageData]];
+//          
+//        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+//            
+//        }];
+//        
+//        [operation start];
+        
+        
+        [self.contentImageView sd_setImageWithURL:[NSURL URLWithString:imageURL] placeholderImage:self.contentImageView.image];
         
         //给imageView添加收拾，点击可以放大
         UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showBigImage)];
@@ -103,7 +118,14 @@
 
 //放大图片后支持手指缩放
 - (UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView{
-    return scrollView.subviews[0];
+    for(id subView in scrollView.subviews)
+    {
+        if([subView isKindOfClass:[UIImageView class]])
+        {
+            return subView;
+        }
+    }
+    return nil;
 }
 
 -(void) showBigImage{
@@ -114,70 +136,76 @@
     bigImageScrollView.backgroundColor = [UIColor darkGrayColor];
     bigImageScrollView.minimumZoomScale = 0.5;
     bigImageScrollView.maximumZoomScale = 2;
-    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:self.largeImageURL]];
+//    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:self.largeImageURL]];
+//   
+//    AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
    
-    AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
     UIActivityIndicatorView *activityView = [[UIActivityIndicatorView alloc] init];
     CGRect rect = [[UIScreen mainScreen]bounds];
     
     activityView.center = CGPointMake(rect.size.width*0.5, rect.size.height*0.5);
+    CGRect activityViewFrame = activityView.frame;
+    activityViewFrame.size.width = 20;
+    activityViewFrame.size.height = 20;
+    [activityView setFrame:activityViewFrame];
     
     CGFloat scrollWidth = bigImageScrollView.frame.size.width;
     CGFloat scrollHeight = bigImageScrollView.frame.size.height;
     [self.window addSubview:bigImageScrollView];
     
-    [self.window addSubview:activityView];
-    [activityView startAnimating];
-    [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
-        [activityView stopAnimating];
-        NSData *imageData = responseObject;
-        UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageWithData:imageData]];
-
-        [imageView setFrame:CGRectMake(0, 0, scrollWidth, scrollHeight)];
-        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(closeBigImageView:)];
-        [bigImageScrollView addGestureRecognizer:tap];
-        [bigImageScrollView addSubview:imageView];
-        [imageView setContentMode:UIViewContentModeScaleAspectFit];
-        [bigImageScrollView setContentSize:imageView.frame.size];
-        bigImageScrollView.delegate = self;
-        
-    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"图片加载失败" message:nil delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
-        [alertView show];
-        [bigImageScrollView removeFromSuperview];
-    }];
+    [bigImageScrollView addSubview:activityView];
     
-    [operation start];
+    
+    [activityView startAnimating];
+    
+    
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(closeBigImageView:)];
+
+    [bigImageScrollView addGestureRecognizer:tap];
+//    [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+//        [activityView stopAnimating];
+//        NSData *imageData = responseObject;
+//        UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageWithData:imageData]];
+//
+//        [imageView setFrame:CGRectMake(0, 0, scrollWidth, scrollHeight)];
+//        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(closeBigImageView:)];
+//        [bigImageScrollView addGestureRecognizer:tap];
+//        [bigImageScrollView addSubview:imageView];
+//        [imageView setContentMode:UIViewContentModeScaleAspectFit];
+//        [bigImageScrollView setContentSize:imageView.frame.size];
+//        bigImageScrollView.delegate = self;
+//        
+//    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+//        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"图片加载失败" message:nil delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+//        [alertView show];
+//        [bigImageScrollView removeFromSuperview];
+//    }];
+//    
+//    [operation start];
+    
+    UIImageView *bigImageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, scrollWidth, scrollHeight)];
+   [bigImageView setContentMode:UIViewContentModeScaleAspectFit];
+    [bigImageView sd_setImageWithURL:[NSURL URLWithString:self.largeImageURL] placeholderImage:self.touxiangImageView.image completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+        if (error) {
+            [bigImageScrollView removeFromSuperview];
+            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"图片加载失败" message:nil delegate:self cancelButtonTitle:@"确定" otherButtonTitles:nil, nil];
+            [alertView show];
+            
+            
+        }else{
+            [activityView removeFromSuperview];
+            [bigImageView setImage:image];
+            [bigImageScrollView addSubview:bigImageView];
+            [bigImageScrollView setContentSize:bigImageView.bounds.size];
+            bigImageScrollView.delegate = self;
+        }
+        
+    }];
 }
-;
+
 -(void) closeBigImageView:(UITapGestureRecognizer *) tap{
     [tap.view removeFromSuperview];
 }
-
-
-
-#pragma mark- 根据内容计算cell的高度
-//-(CGFloat) cellHeightByData:(NSDictionary *) dataDict{
-//    NSString *content  = [dataDict valueForKey:@"content"];
-//    
-//   
-//    CGSize size = [content sizeWithFont:self.contentLabel.font constrainedToSize:CGSizeMake(self.contentLabel.frame.size.width, MAXFLOAT) lineBreakMode:NSLineBreakByWordWrapping];
-//    
-//    CGRect farme = self.contentLabel.frame;
-//    farme.size.height = size.height;
-//    [self.contentLabel setFrame:farme];
-//    NSString *imageURL = [dataDict valueForKey:@"image"];
-//    CGFloat height = farme.origin.y + farme.size.height;
-//    if (imageURL==nil) {
-//        return height + 59;
-//    }else{
-//        CGRect frame1 = self.contentImageView.frame;
-//        [self.contentImageView setFrame:CGRectMake(frame1.origin.x, height + 10, frame1.size.width, frame1.size.height)];
-//        height=self.contentImageView.frame.origin.y+self.contentImageView.frame.size.height;
-//        return height+59;
-//    }
-//
-//}
 
 
 

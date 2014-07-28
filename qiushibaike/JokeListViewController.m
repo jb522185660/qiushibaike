@@ -12,37 +12,40 @@
 #import "JokeCellTableViewCell.h"
 @interface JokeListViewController ()
 {
-//    NSMutableDictionary *_dictData;
+    //    NSMutableDictionary *_dictData;
     UITableView *_tableView;
     NSMutableArray *_arrayData;
+    int _page;
 }
 @end
 
 @implementation JokeListViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        
-    }
-    return self;
-}
 
--(void)viewDidAppear:(BOOL)animated{
-    
+-(NSString *) findJsonURL:(NSString *) title{
+    if ([title isEqualToString:@"最热"]) {
+        return [NSString stringWithFormat:@"http://m2.qiushibaike.com/article/list/suggest?count=30&page=%d",_page];
+    }else if([title isEqualToString:@"最新"]){
+        return [NSString stringWithFormat:@"http://m2.qiushibaike.com/article/list/latest?count=30&page=%d",_page];
+    }else{
+        //有图有真相
+        return [NSString stringWithFormat:@"http://m2.qiushibaike.com/article/list/imgrank?count=30&page=%d",_page];
+    }
     
 }
 
 - (void)viewDidLoad
 {
+    _page = 1;
     [super viewDidLoad];
     
-    [self.navigationController setTitle:@"uuu"];
-//    self.navigationItem.title = self.tabBarItem.title;
-    NSURL *url = [NSURL URLWithString:@"http://m2.qiushibaike.com/article/list/suggest?count=30&page=1"];
+    //[self.navigationController setTitle:@"uuu"];
+    //    self.navigationItem.title = self.tabBarItem.title;
+    NSURL *url = [NSURL URLWithString:[self findJsonURL:self.tabBarItem.title]];
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
+   
     AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
+    
     [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
         //请求成功
         NSString *requestTmp = [NSString stringWithString:operation.responseString];
@@ -61,6 +64,7 @@
             [_tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
             [self.view addSubview:_tableView];
         }
+        _page++;
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         //请求失败
     }];
@@ -75,7 +79,7 @@
 
 
 -(NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-
+    
     
     return _arrayData.count;
 }
@@ -93,17 +97,17 @@
         NSBundle *bundle = [NSBundle mainBundle];
         NSArray *array = [bundle loadNibNamed:@"JokeCellTableViewCell" owner:self options:nil];
         cell = [array lastObject];
-
-       // cell = [[JokeCellTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ID];
+        
+        // cell = [[JokeCellTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:ID];
     }
     
     
     NSDictionary *item = (NSDictionary *)_arrayData[indexPath.row];
     //覆盖数据
     cell.jockData = item;
-
+    
     [cell initCellData];
-
+    
     return cell;
 }
 
@@ -114,21 +118,21 @@
 }
 
 -(CGFloat) tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
-
+    
     NSDictionary *dict = _arrayData[indexPath.row];
     return [JokeCellTableViewCell cellHeightByData:dict];
-
+    
 }
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+ {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 @end
