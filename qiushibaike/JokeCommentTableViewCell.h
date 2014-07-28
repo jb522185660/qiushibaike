@@ -17,4 +17,5 @@
 @property (weak, nonatomic) IBOutlet UIView *separatorView;
 
 @property (strong, nonatomic) NSDictionary *commentDict;
+-(void) initCellData;
 @end

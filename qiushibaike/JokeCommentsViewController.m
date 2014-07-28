@@ -23,41 +23,38 @@
 @implementation JokeCommentsViewController
 
 -(void) loadCommentsData{
-    if (_commentsArray ==  nil) {
-        _commentsArray = [[NSMutableArray alloc] init];
-        [_commentsArray addObject:self.jokeDict];
-    }
+    
     
     NSString *urlStr = [NSString stringWithFormat:@"http://m2.qiushibaike.com/article/%@/comments?count=20&page=%d",_jokeDict[@"id"],_page];
     
     NSURL *url = [NSURL URLWithString:urlStr];
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
+
+//    NSData *responseData = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:nil];
+//   
+//
+//    NSDictionary *dictData = [NSJSONSerialization JSONObjectWithData:responseData options:NSJSONReadingMutableLeaves error:nil];
+//    
+//    
+//    [_commentsArray addObjectsFromArray:dictData[@"items"]];
+//    _page++;
     
-    NSData *responseData = [NSURLConnection sendSynchronousRequest:request returningResponse:nil error:nil];
-   
-//    responseData = [responseData dataUsingEncoding:NSUTF8StringEncoding];
-    NSDictionary *dictData = [NSJSONSerialization JSONObjectWithData:responseData options:NSJSONReadingMutableLeaves error:nil];
     
-    
-    [_commentsArray addObjectsFromArray:dictData[@"items"]];
-    _page++;
-    
-    
-//    AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
-//    [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
-//        //请求成功
-//        NSString *requestTmp = [NSString stringWithString:operation.responseString];
-//        NSData *resData = [[NSData alloc] initWithData:[requestTmp dataUsingEncoding:NSUTF8StringEncoding]];
-//        //系统自带JSON解析
-//        NSDictionary *dictData = [NSJSONSerialization JSONObjectWithData:resData options:NSJSONReadingMutableLeaves error:nil];
-//        
-//        [_commentsArray addObjectsFromArray:dictData[@"items"]];
-//        _page++;
-//        
-//    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-//        NSLog(@"加载评论出错%@",error);
-//    }];
-//    [operation start];
+    AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
+    [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject) {
+        //请求成功
+        NSString *requestTmp = [NSString stringWithString:operation.responseString];
+        NSData *resData = [[NSData alloc] initWithData:[requestTmp dataUsingEncoding:NSUTF8StringEncoding]];
+        //系统自带JSON解析
+        NSDictionary *dictData = [NSJSONSerialization JSONObjectWithData:resData options:NSJSONReadingMutableLeaves error:nil];
+        
+        [_commentsArray addObjectsFromArray:dictData[@"items"]];
+        _page++;
+        [_commentsTableView reloadData];
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        NSLog(@"加载评论出错%@",error);
+    }];
+    [operation start];
     
     
     
@@ -70,10 +67,11 @@
 {
     _page = 1;
     
+    
     if (_commentsTableView == nil) {
         CGFloat width = self.view.frame.size.width;
         CGFloat height = self.view.frame.size.height;
-        CGRect frame = CGRectMake(0,64,width,height-49-64);
+        CGRect frame = CGRectMake(0,64,width,height);
         _commentsTableView = [[UITableView alloc]initWithFrame:frame];
         _commentsTableView.delegate =self;
         _commentsTableView.dataSource = self;
@@ -86,6 +84,11 @@
 
         
     }
+    
+    if (_commentsArray ==  nil) {
+        _commentsArray = [[NSMutableArray alloc] init];
+        [_commentsArray addObject:self.jokeDict];
+    }
     [self loadCommentsData];
     _isFirst = NO;
     [super viewDidLoad];
@@ -97,12 +100,6 @@
 
 -(NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     
-    NSLog(@"行数：%d",_commentsArray.count);
-//    if (_isFirst) {
-//        return _commentsArray.count+1;
-//    }else{
-//        return _commentsArray.count+3;
-//    }
     return _commentsArray.count;
    
 }
@@ -125,6 +122,7 @@
     static NSString *JokeCommentTableViewCellID = @"JokeCommentTableViewCell";
     //拿到一个标示符先去缓存池中查找对应的cell
     UITableViewCell *cell ;
+    JokeCommentTableViewCell *commentCell ;
     if (indexPath.row == 0) {
         cell = [tableView dequeueReusableCellWithIdentifier:JokeCellTableViewCellID];
     }else{
@@ -148,20 +146,21 @@
             NSBundle *bundle = [NSBundle mainBundle];
             NSArray *array = [bundle loadNibNamed:@"JokeCommentTableViewCell" owner:self options:nil];
           
-            JokeCommentTableViewCell *commentCell = [array lastObject];
-            commentCell.commentDict = _commentsArray[indexPath.row];
+            commentCell = [array lastObject];
+            
 //            [commentCell.nickNameLabel setText:@"bbbbb"];
 //            [commentCell setBackgroundColor:[UIColor blueColor]];
             cell = commentCell;
-            
-            
-            return cell;
+
         }
         
     }
     
+
+    
     //设置数据
-   // [cell.textLabel setText:@"123124"];
+    commentCell.commentDict = _commentsArray[indexPath.row];
+    [commentCell initCellData];
     return cell;
 }
 

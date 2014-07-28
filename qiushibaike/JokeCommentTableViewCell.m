@@ -12,7 +12,6 @@
 
 - (void)awakeFromNib
 {
-   NSLog(@"22222");
     [super awakeFromNib];
     
     //设置选中的时候没有颜色
@@ -22,9 +21,14 @@
 }
 
 -(void)layoutSubviews{
-    NSLog(@"33333");
-    NSLog(@"评论：%@",self.commentDict);
+    [super layoutSubviews];
+//    [self initCellData];
+    
+}
 
+
+
+-(void) initCellData{
     UIImage *touxiangDefaultImage = [UIImage imageNamed:@"avatar.jpg"];
     NSDictionary *userDict = _commentDict[@"user"];
     if ((NSNull *)userDict != [NSNull null] && userDict != nil){
@@ -36,6 +40,9 @@
             NSString *touxiangImageURL = [NSString stringWithFormat:@"http://pic.qiushibaike.com/system/avtnew/%@/%@/medium/%@",prefixUserID,userID,icon];
             NSURL *touxiangURL = [NSURL URLWithString:touxiangImageURL];
             [self.touxiangImageView sd_setImageWithURL:touxiangURL placeholderImage:touxiangDefaultImage];
+        }else{
+            [self.nickNameLabel setText:@"匿名"];
+            [self.touxiangImageView setImage:touxiangDefaultImage];
         }
     }else{
         
@@ -46,9 +53,10 @@
     [self.commentLabel setText:_commentDict[@"content"]];
     
     self.commentFloorLabel.hidden = YES;
-//    NSInteger floor =(NSInteger) [_commentDict valueForKey:@"floor"];
-//    
-//    [self.commentFloorLabel setText:[NSString stringWithFormat:@"%d",floor]];
+    //    NSInteger floor =(NSInteger) [_commentDict valueForKey:@"floor"];
+    //
+    //    [self.commentFloorLabel setText:[NSString stringWithFormat:@"%d",floor]];
+    
 }
 
 
