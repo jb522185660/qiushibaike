@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>F9D459E2-A217-4AA9-B6C9-1EC3C72CDA04</string>
+	<key>IDESourceControlProjectName</key>
+	<string>qiushibaike</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>BBC3931E-1B6B-4E0C-8808-11C7F0F955A4</key>
+		<string>https://github.com/jb522185660/qiushibaike.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>qiushibaike.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>BBC3931E-1B6B-4E0C-8808-11C7F0F955A4</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/jb522185660/qiushibaike.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>BBC3931E-1B6B-4E0C-8808-11C7F0F955A4</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>BBC3931E-1B6B-4E0C-8808-11C7F0F955A4</string>
+			<key>IDESourceControlWCCName</key>
+			<string>qiushibaike</string>
+		</dict>
+	</array>
+</dict>
+</plist>

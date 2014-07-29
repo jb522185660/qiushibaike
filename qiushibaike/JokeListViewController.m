@@ -133,9 +133,7 @@ NSString *const JokeCellTableViewCellIdentifier = @"JokeCellTableViewCell";
     [super viewDidLoad];
     
     if (_tableView == nil) {
-        CGFloat width = self.view.frame.size.width;
-        CGFloat height = self.view.frame.size.height;
-        CGRect frame = CGRectMake(0,64,width,height-49-64);
+        CGRect frame = self.view.frame;
         _tableView = [[UITableView alloc]initWithFrame:frame];
         _tableView.delegate =self;
         _tableView.dataSource = self;
