@@ -8,16 +8,29 @@
 
 #import "AppDelegate.h"
 #import "ViewController.h"
+#import "JokeListViewController.h"
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
-//    CGRect frame = [[UIScreen mainScreen] bounds];
-//    self.window = [[UIWindow alloc] initWithFrame:frame];
-//    ViewController *viewController = [[ViewController alloc] ];
-//    [self.window setRootViewController:viewController];
-//    [self.window makeKeyAndVisible];
+    
+    JokeListViewController *v1 = [[JokeListViewController alloc]initWithNibName:@"JokeListViewController" bundle:nil];
+    v1.title = @"最热";
+    UINavigationController *nav1 = [[UINavigationController alloc]initWithRootViewController:v1];
+    
+    JokeListViewController *v2 = [[JokeListViewController alloc]initWithNibName:@"JokeListViewController" bundle:nil];
+    v2.title = @"最新";
+    UINavigationController *nav2 = [[UINavigationController alloc]initWithRootViewController:v2];
+    
+    JokeListViewController *v3 = [[JokeListViewController alloc]initWithNibName:@"JokeListViewController" bundle:nil];
+    v3.title = @"真相";
+    UINavigationController *nav3 = [[UINavigationController alloc]initWithRootViewController:v3];
+    
+    UITabBarController *tabvc = [[UITabBarController alloc]init];
+    tabvc.viewControllers = @[nav1,nav2,nav3];
+    self.window.rootViewController = tabvc;
+    
     return YES;
 }
 							

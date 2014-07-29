@@ -12,15 +12,18 @@
 #import "JokeCellTableViewCell.h"
 #import "MJRefresh.h"
 #import "JokeCommentsViewController.h"
+#define CURRENTVERSION [[[UIDevice currentDevice] systemVersion] floatValue]
+
 NSString *const JokeCellTableViewCellIdentifier = @"JokeCellTableViewCell";
 
 @interface JokeListViewController ()
 {
-    //    NSMutableDictionary *_dictData;
-    UITableView *_tableView;
     NSMutableArray *_arrayData;
     int _page;
 }
+
+@property (weak,nonatomic)IBOutlet UITableView *tableView;
+
 @end
 
 @implementation JokeListViewController
@@ -131,29 +134,9 @@ NSString *const JokeCellTableViewCellIdentifier = @"JokeCellTableViewCell";
 {
     _page = 1;
     [super viewDidLoad];
-    
-    if (_tableView == nil) {
-        CGRect frame = self.view.frame;
-        _tableView = [[UITableView alloc]initWithFrame:frame];
-        _tableView.delegate =self;
-        _tableView.dataSource = self;
-        [_tableView setSeparatorStyle:UITableViewCellSeparatorStyleNone];
-        [self.view addSubview:_tableView];
-    }
-    
-    // 1.注册cell
-//    [_tableView registerClass:[JokeCellTableViewCell class] forCellReuseIdentifier:JokeCellTableViewCellIdentifier];
-    
-    // 2.集成刷新控件
+
     [self setupRefresh];
-    
-    
-    
-    NSLog(@"title:%@",self.tabBarItem.title);
-    
 }
-
-
 
 -(NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     

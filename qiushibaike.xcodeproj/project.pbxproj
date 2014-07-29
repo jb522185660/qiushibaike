@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		04AC468B19873FEC00E16BA7 /* JokeListViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 04AC468A19873FEC00E16BA7 /* JokeListViewController.xib */; };
 		460B74E9198012E800EEEBD5 /* JokeListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 460B74E8198012E800EEEBD5 /* JokeListViewController.m */; };
 		460B7510198021B200EEEBD5 /* AFHTTPRequestOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 460B74EC198021B200EEEBD5 /* AFHTTPRequestOperation.m */; };
 		460B7511198021B200EEEBD5 /* AFHTTPRequestOperationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 460B74EE198021B200EEEBD5 /* AFHTTPRequestOperationManager.m */; };
@@ -65,7 +66,6 @@
 		46FA9587198006A2000A908D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 46FA9586198006A2000A908D /* main.m */; };
 		46FA958B198006A2000A908D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 46FA958A198006A2000A908D /* AppDelegate.m */; };
 		46FA958E198006A2000A908D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 46FA958C198006A2000A908D /* Main.storyboard */; };
-		46FA9591198006A2000A908D /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 46FA9590198006A2000A908D /* ViewController.m */; };
 		46FA9593198006A2000A908D /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 46FA9592198006A2000A908D /* Images.xcassets */; };
 		46FA959A198006A2000A908D /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46FA9599198006A2000A908D /* XCTest.framework */; };
 		46FA959B198006A2000A908D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46FA957A198006A2000A908D /* Foundation.framework */; };
@@ -85,6 +85,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		04AC468A19873FEC00E16BA7 /* JokeListViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = JokeListViewController.xib; sourceTree = "<group>"; };
 		460B74E7198012E800EEEBD5 /* JokeListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JokeListViewController.h; sourceTree = "<group>"; };
 		460B74E8198012E800EEEBD5 /* JokeListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JokeListViewController.m; sourceTree = "<group>"; };
 		460B74EB198021B200EEEBD5 /* AFHTTPRequestOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPRequestOperation.h; sourceTree = "<group>"; };
@@ -195,8 +196,6 @@
 		46FA9589198006A2000A908D /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		46FA958A198006A2000A908D /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		46FA958D198006A2000A908D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		46FA958F198006A2000A908D /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		46FA9590198006A2000A908D /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		46FA9592198006A2000A908D /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		46FA9598198006A2000A908D /* qiushibaikeTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = qiushibaikeTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		46FA9599198006A2000A908D /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
@@ -386,10 +385,9 @@
 				46FA9589198006A2000A908D /* AppDelegate.h */,
 				46FA958A198006A2000A908D /* AppDelegate.m */,
 				46FA958C198006A2000A908D /* Main.storyboard */,
-				46FA958F198006A2000A908D /* ViewController.h */,
-				46FA9590198006A2000A908D /* ViewController.m */,
 				460B74E7198012E800EEEBD5 /* JokeListViewController.h */,
 				460B74E8198012E800EEEBD5 /* JokeListViewController.m */,
+				04AC468A19873FEC00E16BA7 /* JokeListViewController.xib */,
 				46FA9592198006A2000A908D /* Images.xcassets */,
 				46FA9581198006A2000A908D /* Supporting Files */,
 				467CC4721981C43C00BAC5F7 /* JokeCellTableViewCell.h */,
@@ -511,6 +509,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				04AC468B19873FEC00E16BA7 /* JokeListViewController.xib in Resources */,
 				46FA9593198006A2000A908D /* Images.xcassets in Resources */,
 				46A6E1141982BFC100175F21 /* avatar.jpg in Resources */,
 				46EE7E3619853C8300A0DA45 /* MJRefresh.bundle in Resources */,
@@ -548,7 +547,6 @@
 				461E08251986689A0006F47B /* UIView+WebCacheOperation.m in Sources */,
 				460B751B198021B200EEEBD5 /* UIAlertView+AFNetworking.m in Sources */,
 				461E081C1986689A0006F47B /* SDWebImageDownloaderOperation.m in Sources */,
-				46FA9591198006A2000A908D /* ViewController.m in Sources */,
 				460B7514198021B200EEEBD5 /* AFSecurityPolicy.m in Sources */,
 				46FA958B198006A2000A908D /* AppDelegate.m in Sources */,
 				46EE7E3D19853C8300A0DA45 /* UIView+Extension.m in Sources */,
